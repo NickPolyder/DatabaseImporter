@@ -1,0 +1,20 @@
+﻿<Window x:Name="Main" x:Class="DatabaseImporter.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseImporter.WPF"
+        mc:Ignorable="d"
+        Title="Database Data Importer" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="213*"/>
+            <ColumnDefinition Width="580*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel HorizontalAlignment="Left" Height="22" LastChildFill="False" Margin="0,0,-0.4,0" VerticalAlignment="Top" Width="794" Grid.ColumnSpan="2">
+            <Menu x:Name="Database" Height="22.4" IsMainMenu="True"  VerticalAlignment="Top" Width="100">
+                <MenuItem x:Name="ConnectionItem" Header="Connection" Command="{Binding OpenConnectionItem}"/>
+            </Menu>
+        </DockPanel>
+    </Grid>
+</Window>
