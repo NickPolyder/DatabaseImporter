@@ -5,9 +5,12 @@ namespace DatabaseImporter.Common.Infastructure
 {
     public class ServiceLocator : IServiceLocator
     {
+        private readonly Dictionary<string, ServiceItem> _keyServices = new Dictionary<string, ServiceItem>();
         private readonly Dictionary<Type, ServiceItem> _services = new Dictionary<Type, ServiceItem>();
 
-        public void AddService<TIService, TService>(ServiceType serviceType) where TIService : class where TService : class, new()
+        #region Typed Services
+
+        public void AddService<TIService, TService>(ServiceType serviceType) where TIService : class where TService : class, TIService, new()
         {
             var typeService = typeof(TIService);
             if (_services.ContainsKey(typeService))
@@ -25,7 +28,7 @@ namespace DatabaseImporter.Common.Infastructure
             _services.Add(typeService, GetLocator(serviceType, (__) => new TService()));
         }
 
-        public void AddService<TIService>(ServiceType serviceType,Func<IServiceLocator, TIService> factory) where TIService : class
+        public void AddService<TIService>(ServiceType serviceType, Func<IServiceLocator, TIService> factory) where TIService : class
         {
             if (factory == null) throw new ArgumentNullException(nameof(factory));
 
@@ -33,27 +36,15 @@ namespace DatabaseImporter.Common.Infastructure
             if (_services.ContainsKey(typeService))
                 throw new ArgumentException($"The service: {typeService.Name}already exists.");
 
-            _services.Add(typeService, GetLocator(serviceType, (__) => factory.Invoke(this)));
+            _services.Add(typeService, GetLocator(serviceType, factory));
         }
-
-        public void AddService<TIService, TService>(ServiceType serviceType, Func<IServiceLocator, TService> factory) where TIService : class where TService : class
-        {
-            if (factory == null) throw new ArgumentNullException(nameof(factory));
-
-            var typeService = typeof(TIService);
-            if (_services.ContainsKey(typeService))
-                throw new ArgumentException($"The service: {typeService.Name}already exists.");
-
-            _services.Add(typeService, GetLocator(serviceType, (__) => factory.Invoke(this)));
-        }
-
 
         public TIService GetService<TIService>() where TIService : class
         {
             var typeService = typeof(TIService);
             if (!_services.ContainsKey(typeService))
                 throw new ArgumentException($"The service: {typeService.Name} does not exist.");
-            
+
             return _services[typeService].GetInstance<TIService>();
         }
 
@@ -63,6 +54,71 @@ namespace DatabaseImporter.Common.Infastructure
                 throw new ArgumentException($"The service: {type.Name} does not exist.");
 
             return _services[type].GetInstance<object>();
+        }
+
+        #endregion
+
+        #region Keyed Services
+
+        public void AddService<TIService, TService>(string key, ServiceType serviceType)
+            where TIService : class where TService : class, TIService, new()
+        {
+            KeyGuard(key);
+            _keyServices.Add(key, GetLocator(serviceType, (__) => new TService()));
+        }
+
+        public void AddService<TService>(string key, ServiceType serviceType) where TService : class, new()
+        {
+            KeyGuard(key);
+            _keyServices.Add(key, GetLocator(serviceType, (__) => new TService()));
+        }
+
+        public void AddService<TIService>(string key, ServiceType serviceType, Func<IServiceLocator, TIService> factory) where TIService : class
+        {
+            KeyGuard(key);
+            _keyServices.Add(key, GetLocator(serviceType, factory));
+        }
+        
+        public TIService GetService<TIService>(string key) where TIService : class
+        {
+            KeyNullGuard(key);
+
+            if (!_keyServices.ContainsKey(key))
+                throw new ArgumentException("Key does not exist.");
+
+            return _keyServices[key].GetInstance<TIService>();
+        }
+
+        public object GetService(string key)
+        {
+            KeyNullGuard(key);
+
+            if (!_keyServices.ContainsKey(key))
+                throw new ArgumentException("Key does not exist.");
+
+            return _keyServices[key].GetInstance<object>();
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private void KeyGuard(string key)
+        {
+            KeyNullGuard(key);
+
+            if (_keyServices.ContainsKey(key))
+            {
+                throw new ArgumentException("Key already exists.");
+            }
+        }
+
+        private static void KeyNullGuard(string key)
+        {
+            if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
         }
 
         private ServiceItem GetLocator(ServiceType type, Func<IServiceLocator, object> factoryFunc)
@@ -76,6 +132,10 @@ namespace DatabaseImporter.Common.Infastructure
                     return new TransientServiceItem(this, factoryFunc);
             }
         }
+
+        #endregion
+
+        #region ServiceItem
 
         private abstract class ServiceItem
         {
@@ -119,5 +179,8 @@ namespace DatabaseImporter.Common.Infastructure
                 return (TService)_factory?.Invoke(Parent);
             }
         }
+
+        #endregion
+
     }
 }

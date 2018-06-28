@@ -11,10 +11,15 @@
             <ColumnDefinition Width="213*"/>
             <ColumnDefinition Width="580*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel HorizontalAlignment="Left" Height="22" LastChildFill="False" Margin="0,0,-0.4,0" VerticalAlignment="Top" Width="794" Grid.ColumnSpan="2">
-            <Menu x:Name="Database" Height="22.4" IsMainMenu="True"  VerticalAlignment="Top" Width="100">
-                <MenuItem x:Name="ConnectionItem" Header="Connection" Command="{Binding OpenConnectionItem}"/>
-            </Menu>
-        </DockPanel>
+        <Menu HorizontalAlignment="Stretch" 
+              VerticalAlignment="Top" 
+              IsMainMenu="True">
+            <MenuItem Header="{Binding Path=Title}" Padding="3,6">
+                <MenuItem Header="Connection" Command="{Binding OpenConnectionCommand}" />
+                <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+        </Menu>
+
     </Grid>
 </Window>

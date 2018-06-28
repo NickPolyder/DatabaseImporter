@@ -6,7 +6,7 @@ namespace DatabaseImporter.Common.Infastructure
     {
         #region Transient
         public static void AddTransient<TIService, TService>(this IServiceLocator locator)
-            where TIService : class where TService : class, new()
+            where TIService : class where TService : class, TIService, new()
         {
             locator.AddService<TIService, TService>(ServiceType.Transient);
         }
@@ -22,10 +22,21 @@ namespace DatabaseImporter.Common.Infastructure
             locator.AddService(ServiceType.Transient, factory);
         }
 
-        public static void AddTransient<TIService, TService>(this IServiceLocator locator, Func<IServiceLocator, TService> factory)
-            where TIService : class where TService : class
+        public static void AddTransient<TIService, TService>(this IServiceLocator locator, string key)
+            where TIService : class where TService : class, TIService, new()
         {
-            locator.AddService<TIService, TService>(ServiceType.Transient, factory);
+            locator.AddService<TIService, TService>(key, ServiceType.Transient);
+        }
+
+        public static void AddTransient<TService>(this IServiceLocator locator, string key) where TService : class, new()
+        {
+            locator.AddService<TService>(key, ServiceType.Transient);
+        }
+
+        public static void AddTransient<TIService>(this IServiceLocator locator, string key, Func<IServiceLocator, TIService> factory)
+            where TIService : class
+        {
+            locator.AddService(key, ServiceType.Transient, factory);
         }
         #endregion
 
@@ -47,10 +58,21 @@ namespace DatabaseImporter.Common.Infastructure
             locator.AddService(ServiceType.Singleton, factory);
         }
 
-        public static void AddSingleton<TIService, TService>(this IServiceLocator locator, Func<IServiceLocator, TService> factory)
-            where TIService : class where TService : class
+        public static void AddSingleton<TIService, TService>(this IServiceLocator locator,string key)
+            where TIService : class where TService : class, TIService, new()
         {
-            locator.AddService<TIService, TService>(ServiceType.Singleton, factory);
+            locator.AddService<TIService, TService>(key, ServiceType.Singleton);
+        }
+
+        public static void AddSingleton<TService>(this IServiceLocator locator, string key) where TService : class, new()
+        {
+            locator.AddService<TService>(key, ServiceType.Singleton);
+        }
+
+        public static void AddSingleton<TIService>(this IServiceLocator locator, string key, Func<IServiceLocator, TIService> factory)
+            where TIService : class
+        {
+            locator.AddService(key, ServiceType.Singleton, factory);
         }
         #endregion
 
@@ -71,6 +93,30 @@ namespace DatabaseImporter.Common.Infastructure
             try
             {
                 return locator.GetService<TService>();
+            }
+            catch
+            {
+                return default(TService);
+            }
+        }
+
+        public static object GetServiceOrDefault(this IServiceLocator locator, string key)
+        {
+            try
+            {
+                return locator.GetService(key);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static TService GetServiceOrDefault<TService>(this IServiceLocator locator,string key) where TService : class
+        {
+            try
+            {
+                return locator.GetService<TService>(key);
             }
             catch
             {
