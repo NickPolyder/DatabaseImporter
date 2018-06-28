@@ -7,7 +7,7 @@ namespace DatabaseImporter.WPF.Infastructure.Utilities
     {
         public static void LoadWindowContext(this Window window)
         {
-            window.DataContext = DatabaseImporterContext.Current.ServiceLocator.GetServiceOrDefault(window.GetType());
+            window.DataContext = DatabaseImporterContext.Current.ServiceLocator.GetServiceOrDefault(window.GetType().Name);
         }
     }
 }

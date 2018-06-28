@@ -1,15 +1,34 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using DatabaseImporter.WPF.Infastructure.Services;
 
 namespace DatabaseImporter.WPF.Infastructure.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanging, INotifyPropertyChanged
     {
+        protected readonly INavigationService NavigationService;
+        protected readonly IMessagingService MessagingService;
+        protected BaseViewModel()
+        {
+            NavigationService = CurrentContext.ServiceLocator.GetService<INavigationService>();
+            MessagingService = CurrentContext.ServiceLocator.GetService<IMessagingService>();
+        }
         public event PropertyChangingEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         protected DatabaseImporterContext CurrentContext => DatabaseImporterContext.Current;
-        
+
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                OnPropertyChanging();
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
 
         protected void OnPropertyChanging([CallerMemberName] string propertyName = "")
         {

@@ -2,6 +2,7 @@
 using DatabaseImporter.Common.Database.Connection;
 using DatabaseImporter.Common.Infastructure;
 using DatabaseImporter.WPF.Infastructure.Database.Connection;
+using DatabaseImporter.WPF.Infastructure.Services;
 using DatabaseImporter.WPF.Infastructure.ViewModels;
 
 namespace DatabaseImporter.WPF.Infastructure
@@ -21,15 +22,22 @@ namespace DatabaseImporter.WPF.Infastructure
         private void InitializeServiceLocator()
         {
             ServiceLocator = new ServiceLocator();
-            ServiceLocator.AddSingleton<IDbConnectionConfigurator, AppSettingsDatabaseConfigurator>();
 
-            InitializeViewModelLocator();
+            InitializeServices();
+            InitializeViewModel();
         }
 
-        private void InitializeViewModelLocator()
+        private void InitializeServices()
         {
-            ServiceLocator.AddTransient<MainWindow,MainViewModel>();
+            ServiceLocator.AddSingleton<IDbConnectionConfigurator, AppSettingsDatabaseConfigurator>();
+            ServiceLocator.AddSingleton<IMessagingService, MessagingService>();
+            ServiceLocator.AddSingleton<INavigationService, NavigationService>();
         }
-        
+
+        private void InitializeViewModel()
+        {
+            ServiceLocator.AddTransient<MainViewModel>(nameof(MainWindow));
+        }
+
     }
 }

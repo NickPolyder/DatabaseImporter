@@ -5,26 +5,78 @@ namespace DatabaseImporter.WPF.Infastructure.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        
         public MainViewModel()
         {
-            OpenConnectionItem = new Command(OpenConnectionItemCommand);
+            Title = "Database Importer";
+            OpenConnectionCommand = new Command(OpenConnectionCommandAction);
+            RefreshCommand = new Command(RefreshCommandAction);
+            ExitCommand = new Command(ExitCommandAction);
+           
         }
 
-        private ICommand _openConnectionItem;
-        public ICommand OpenConnectionItem
+        #region Open Connection Command
+
+        private ICommand _openConnectionCommand;
+        public ICommand OpenConnectionCommand
         {
-            get => _openConnectionItem;
+            get => _openConnectionCommand;
             set
             {
                 OnPropertyChanging();
-                _openConnectionItem = value;
+                _openConnectionCommand = value;
                 OnPropertyChanged();
             }
         }
 
-        private void OpenConnectionItemCommand(object parameter)
+        private void OpenConnectionCommandAction(object parameter)
         {
-            System.Diagnostics.Debug.WriteLine("geiaaaa!");
+            MessagingService.DisplayMessage("Open", "Opening Connections!");
         }
+
+        #endregion
+
+        #region Refresh Command
+
+        private ICommand _refreshCommand;
+        public ICommand RefreshCommand
+        {
+            get => _refreshCommand;
+            set
+            {
+                OnPropertyChanging();
+                _refreshCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void RefreshCommandAction(object parameter)
+        {
+            MessagingService.DisplayMessage("Refreshing","Refreshing the connection!");
+        }
+
+        #endregion
+
+        #region Exit Command
+
+        private ICommand _exitCommand;
+        public ICommand ExitCommand
+        {
+            get => _exitCommand;
+            set
+            {
+                OnPropertyChanging();
+                _exitCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void ExitCommandAction(object parameter)
+        {
+            NavigationService.Exit();
+        }
+
+
+        #endregion
     }
 }

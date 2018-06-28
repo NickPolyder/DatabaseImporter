@@ -68,6 +68,10 @@
     </Compile>
     <Compile Include="Infastructure\DatabaseImporterContext.cs" />
     <Compile Include="Infastructure\Database\Connection\AppSettingsDatabaseConfigurator.cs" />
+    <Compile Include="Infastructure\Services\INavigationService.cs" />
+    <Compile Include="Infastructure\Services\IMessagingService.cs" />
+    <Compile Include="Infastructure\Services\NavigationService.cs" />
+    <Compile Include="Infastructure\Services\MessagingService.cs" />
     <Compile Include="Infastructure\Utilities\Command.cs" />
     <Compile Include="Infastructure\Utilities\WindowExtensions.cs" />
     <Compile Include="Infastructure\ViewModels\BaseViewModel.cs" />
