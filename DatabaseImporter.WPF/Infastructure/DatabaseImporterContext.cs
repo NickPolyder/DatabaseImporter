@@ -36,7 +36,9 @@ namespace DatabaseImporter.WPF.Infastructure
 
         private void InitializeViewModel()
         {
-            ServiceLocator.AddTransient<MainViewModel>(nameof(MainWindow));
+            ServiceLocator.AddTransient(nameof(MainWindow),
+                (svcLocator) => new MainViewModel(svcLocator.GetService<INavigationService>(),
+                                                  svcLocator.GetService<IMessagingService>()));
         }
 
     }

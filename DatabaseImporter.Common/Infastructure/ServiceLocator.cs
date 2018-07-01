@@ -10,7 +10,7 @@ namespace DatabaseImporter.Common.Infastructure
 
         #region Typed Services
 
-        public void AddService<TIService, TService>(ServiceType serviceType) where TIService : class where TService : class, TIService, new()
+        public void AddService<TIService, TService>(ServiceType serviceType) where TIService : class where TService : TIService, new()
         {
             var typeService = typeof(TIService);
             if (_services.ContainsKey(typeService))
@@ -19,7 +19,7 @@ namespace DatabaseImporter.Common.Infastructure
             _services.Add(typeService, GetLocator(serviceType, (__) => new TService()));
         }
 
-        public void AddService<TService>(ServiceType serviceType) where TService : class, new()
+        public void AddService<TService>(ServiceType serviceType) where TService : new()
         {
             var typeService = typeof(TService);
             if (_services.ContainsKey(typeService))
@@ -39,7 +39,7 @@ namespace DatabaseImporter.Common.Infastructure
             _services.Add(typeService, GetLocator(serviceType, factory));
         }
 
-        public TIService GetService<TIService>() where TIService : class
+        public TIService GetService<TIService>()
         {
             var typeService = typeof(TIService);
             if (!_services.ContainsKey(typeService))
@@ -61,13 +61,13 @@ namespace DatabaseImporter.Common.Infastructure
         #region Keyed Services
 
         public void AddService<TIService, TService>(string key, ServiceType serviceType)
-            where TIService : class where TService : class, TIService, new()
+            where TIService : class where TService : TIService, new()
         {
             KeyGuard(key);
             _keyServices.Add(key, GetLocator(serviceType, (__) => new TService()));
         }
 
-        public void AddService<TService>(string key, ServiceType serviceType) where TService : class, new()
+        public void AddService<TService>(string key, ServiceType serviceType) where TService : new()
         {
             KeyGuard(key);
             _keyServices.Add(key, GetLocator(serviceType, (__) => new TService()));
@@ -79,7 +79,7 @@ namespace DatabaseImporter.Common.Infastructure
             _keyServices.Add(key, GetLocator(serviceType, factory));
         }
         
-        public TIService GetService<TIService>(string key) where TIService : class
+        public TIService GetService<TIService>(string key)
         {
             KeyNullGuard(key);
 
@@ -145,7 +145,7 @@ namespace DatabaseImporter.Common.Infastructure
             {
                 Parent = parent;
             }
-            public abstract TService GetInstance<TService>() where TService : class;
+            public abstract TService GetInstance<TService>();
         }
 
         private class SingletonServiceItem : ServiceItem

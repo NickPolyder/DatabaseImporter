@@ -8,10 +8,14 @@ namespace DatabaseImporter.WPF.Infastructure.ViewModels
     {
         protected readonly INavigationService NavigationService;
         protected readonly IMessagingService MessagingService;
-        protected BaseViewModel()
+
+        protected BaseViewModel():this(null,null)
+        { }
+        
+        protected BaseViewModel(INavigationService navigationService, IMessagingService messagingService)
         {
-            NavigationService = CurrentContext.ServiceLocator.GetService<INavigationService>();
-            MessagingService = CurrentContext.ServiceLocator.GetService<IMessagingService>();
+            NavigationService = navigationService ?? CurrentContext.ServiceLocator.GetService<INavigationService>(); ;
+            MessagingService = messagingService ?? CurrentContext.ServiceLocator.GetService<IMessagingService>();
         }
         public event PropertyChangingEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,5 +43,6 @@ namespace DatabaseImporter.WPF.Infastructure.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
     }
 }
