@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A44B605E-6372-4E8A-9E03-2A38118A7507}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DatabaseImporter.Tests</RootNamespace>
+    <AssemblyName>DatabaseImporter.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DefaultDbConnectionFactoryTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq">
+      <Version>4.8.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Shouldly">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SqlClient">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="xunit">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.abstractions">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.analyzers">
+      <Version>0.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.assert">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.core">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.extensibility.core">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.extensibility.execution">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.console">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.msbuild">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.utility">
+      <Version>2.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <Version>2.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DatabaseImporter.Common\DatabaseImporter.Common.csproj">
+      <Project>{BA0FF6B2-2902-4A17-BB13-F9592C70F042}</Project>
+      <Name>DatabaseImporter.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DatabaseImporter\DatabaseImporter.csproj">
+      <Project>{2F85CA49-2326-4647-A841-BFC20F124F90}</Project>
+      <Name>DatabaseImporter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
