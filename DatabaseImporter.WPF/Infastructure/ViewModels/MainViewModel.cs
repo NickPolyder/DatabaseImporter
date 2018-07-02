@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using DatabaseImporter.Common.Database.Connection;
 using DatabaseImporter.WPF.Infastructure.Services;
 using DatabaseImporter.WPF.Infastructure.Utilities;
 
@@ -30,9 +31,9 @@ namespace DatabaseImporter.WPF.Infastructure.ViewModels
             }
         }
 
-        private void OpenConnectionCommandAction(object parameter)
+        private async void OpenConnectionCommandAction(object parameter)
         {
-            MessagingService.DisplayMessage("Open", "Opening Connections!");
+            await NavigationService.NavigateTo<ConnectionViewModel>(CurrentContext.ServiceLocator.GetService<IDbConnectionConfigurator>());
         }
 
         #endregion

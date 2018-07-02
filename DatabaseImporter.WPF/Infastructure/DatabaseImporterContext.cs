@@ -1,9 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using DatabaseImporter.Common.Database.Connection;
 using DatabaseImporter.Common.Infastructure;
 using DatabaseImporter.WPF.Infastructure.Database.Connection;
 using DatabaseImporter.WPF.Infastructure.Services;
 using DatabaseImporter.WPF.Infastructure.ViewModels;
+using DatabaseImporter.WPF.Views;
 
 namespace DatabaseImporter.WPF.Infastructure
 {
@@ -31,14 +34,27 @@ namespace DatabaseImporter.WPF.Infastructure
         {
             ServiceLocator.AddSingleton<IDbConnectionConfigurator, AppSettingsDatabaseConfigurator>();
             ServiceLocator.AddSingleton<IMessagingService, MessagingService>();
-            ServiceLocator.AddSingleton<INavigationService, NavigationService>();
+            ServiceLocator.AddSingleton<INavigationService>((svcLocator) => new NavigationService(GetNavigationMap(),svcLocator));
         }
 
         private void InitializeViewModel()
         {
-            ServiceLocator.AddTransient(nameof(MainWindow),
-                (svcLocator) => new MainViewModel(svcLocator.GetService<INavigationService>(),
+            ServiceLocator.AddTransient((svcLocator) => new MainViewModel(svcLocator.GetService<INavigationService>(),
                                                   svcLocator.GetService<IMessagingService>()));
+
+            ServiceLocator.AddTransient((svcLocator) => new ConnectionViewModel(svcLocator.GetService<INavigationService>(),
+                svcLocator.GetService<IMessagingService>()));
+        }
+
+
+        private static IDictionary<Type, Func<Window>> GetNavigationMap()
+        {
+            return new Dictionary<Type, Func<Window>>
+            {
+                [typeof(MainViewModel)] = () => new MainWindow(),
+                [typeof(ConnectionViewModel)] = () => new ConnectionWindow(),
+
+            };
         }
 
     }
