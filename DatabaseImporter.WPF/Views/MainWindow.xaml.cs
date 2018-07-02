@@ -1,7 +1,4 @@
 ﻿using System.Windows;
-using DatabaseImporter.Common.Database.Connection;
-using DatabaseImporter.WPF.Infastructure;
-using DatabaseImporter.WPF.Infastructure.Utilities;
 
 namespace DatabaseImporter.WPF
 {
@@ -13,8 +10,6 @@ namespace DatabaseImporter.WPF
         public MainWindow()
         {
             InitializeComponent();
-            this.LoadWindowContext();
-            
         }
         
     }

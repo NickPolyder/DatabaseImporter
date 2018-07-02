@@ -19,6 +19,7 @@ namespace DatabaseImporter.WPF.Infastructure.Database.Connection
         public Task WriteConnectionString(string connectionString)
         {
             Settings.Default.ConnectionString = connectionString;
+            Settings.Default.Save();
             return Task.CompletedTask;
         }
     }
