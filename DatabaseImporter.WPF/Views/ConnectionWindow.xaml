@@ -18,6 +18,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Label Grid.ColumnSpan="4"
                Content="Add or Update the Connection String"
@@ -55,5 +56,27 @@
                 VerticalAlignment="Stretch"
                 Margin="10"
                 Command="{Binding BackCommand}"/>
+
+        <Rectangle 
+            Grid.Column="0"
+            Grid.Row="4"
+            Fill="{Binding TestFillColor}"
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Center"
+            Margin="0,20"
+            MinHeight="52"
+            Height="{Binding Source=TestConnBtn,Path=Height}"
+            Width="50"
+
+        />
+        <Button x:Name="TestConnBtn"
+                Grid.Column="0"
+                Grid.Row="4"
+                Content="Test Connection ?"
+                Margin="0,19.6,24.4,20"
+                Command="{Binding TestConnectionStringCommand}"
+                 HorizontalContentAlignment="Center"
+                />
+
     </Grid>
 </Window>
