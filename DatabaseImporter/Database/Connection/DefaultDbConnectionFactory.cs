@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using DatabaseImporter.Common.Database.Connection;
@@ -11,7 +12,7 @@ namespace DatabaseImporter.Database.Connection
 
         public static IDbConnectionFactory Default => DefaultFactory.Value;
 
-        public virtual async Task<SqlConnection> Create(IDbConnectionConfigurator connectionConfigurator)
+        public virtual async Task<DbConnection> Create(IDbConnectionConfigurator connectionConfigurator)
         {
             if (connectionConfigurator == null)
                 throw new ArgumentNullException(nameof(connectionConfigurator));
