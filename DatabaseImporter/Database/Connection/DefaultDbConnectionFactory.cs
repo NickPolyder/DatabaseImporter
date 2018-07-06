@@ -26,7 +26,5 @@ namespace DatabaseImporter.Database.Connection
 
             return new SqlConnection(connectionString);
         }
-
-
     }
 }

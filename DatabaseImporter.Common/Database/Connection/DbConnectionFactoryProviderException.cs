@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace DatabaseImporter.Common.Database.Connection
 {
@@ -7,15 +8,24 @@ namespace DatabaseImporter.Common.Database.Connection
     {
         public DbConnectionName? ConnectionName
         {
-            get => Data[nameof(ConnectionName)] as DbConnectionName?;
-            set => Data[nameof(ConnectionName)] = value;
+            get
+            {
+                var str = Data[nameof(ConnectionName)]?.ToString();
+                if (!string.IsNullOrEmpty(str))
+                {
+                    return JsonConvert.DeserializeObject<DbConnectionName?>(str);
+                }
+
+                return null;
+            }
+            set => Data[nameof(ConnectionName)] = value != null ? JsonConvert.SerializeObject(value) : null;
         }
 
         public DbConnectionFactoryProviderException()
         {
         }
 
-        public DbConnectionFactoryProviderException(DbConnectionName dbConnName):this($"Connection Provider for {dbConnName.Name} not found")
+        public DbConnectionFactoryProviderException(DbConnectionName dbConnName) : this($"Connection Provider for {dbConnName.Name} not found")
         {
             ConnectionName = dbConnName;
         }
