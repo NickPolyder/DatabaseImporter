@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DatabaseImporter.Common.Database.Connection;
+using DatabaseImporter.Common.Database.Table;
 using DatabaseImporter.WPF.Infastructure.Services;
 using DatabaseImporter.WPF.Infastructure.Utilities;
 
@@ -10,11 +11,12 @@ namespace DatabaseImporter.WPF.Infastructure.ViewModels
         public MainViewModel(INavigationService navigationService, IMessagingService messagingService)
         : base(navigationService, messagingService)
         {
-            Title = "Database Importer";
+            Title = "Database Data Importer";
             OpenConnectionCommand = new Command(OpenConnectionCommandAction);
             RefreshCommand = new Command(RefreshCommandAction);
             ExitCommand = new Command(ExitCommandAction);
         }
+
 
 
         #region Open Connection Command
@@ -52,9 +54,14 @@ namespace DatabaseImporter.WPF.Infastructure.ViewModels
             }
         }
 
-        private void RefreshCommandAction(object parameter)
+        private async void RefreshCommandAction(object parameter)
         {
-            MessagingService.DisplayMessage("Refreshing", "Refreshing the connection!");
+            var tableServices = base.CurrentContext.ServiceLocator.GetService<ITableServices>();
+            var tables = await tableServices.GetTables();
+            foreach (var table in tables)
+            {
+                System.Diagnostics.Debug.WriteLine($"Table: {table.Name}");
+            }
         }
 
         #endregion
