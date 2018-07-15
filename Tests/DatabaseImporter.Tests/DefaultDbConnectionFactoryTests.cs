@@ -13,7 +13,7 @@ namespace DatabaseImporter.Tests
         public void Should_Throw_If_The_Connection_String_Does_Not_Exist()
         {
             var mock = new Moq.Mock<IDbConnectionConfigurator>();
-            mock.Setup(tt => tt.ConnectionStringExists()).ReturnsAsync(true);
+            mock.Setup(tt => tt.ConnectionStringExists()).ReturnsAsync(false);
 
             var factory = new DefaultDbConnectionFactory();
 
@@ -24,7 +24,7 @@ namespace DatabaseImporter.Tests
         public void Should_Return_Empty_SqlConnection()
         {
             var mock = new Moq.Mock<IDbConnectionConfigurator>();
-            mock.Setup(tt => tt.ConnectionStringExists()).ReturnsAsync(false);
+            mock.Setup(tt => tt.ConnectionStringExists()).ReturnsAsync(true);
             mock.Setup(tt => tt.LoadConnectionString()).ReturnsAsync(string.Empty);
             var factory = new DefaultDbConnectionFactory();
 
@@ -39,7 +39,7 @@ namespace DatabaseImporter.Tests
             const string connString =
                 "Server=myServerName\\myInstanceName;Database=myDataBase;User Id=myUsername;Password = myPassword;";
             var mock = new Moq.Mock<IDbConnectionConfigurator>();
-            mock.Setup(tt => tt.ConnectionStringExists()).ReturnsAsync(false);
+            mock.Setup(tt => tt.ConnectionStringExists()).ReturnsAsync(true);
             mock.Setup(tt => tt.LoadConnectionString()).ReturnsAsync(connString);
             var factory = new DefaultDbConnectionFactory();
 
