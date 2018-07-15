@@ -17,7 +17,7 @@ namespace DatabaseImporter.Database.Connection
             if (connectionConfigurator == null)
                 throw new ArgumentNullException(nameof(connectionConfigurator));
 
-            if (await connectionConfigurator.ConnectionStringExists())
+            if (!await connectionConfigurator.ConnectionStringExists())
             {
                 throw new ConnectionStringNotFoundException();
             }

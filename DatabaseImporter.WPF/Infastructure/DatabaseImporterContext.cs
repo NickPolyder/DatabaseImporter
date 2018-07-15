@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Windows;
 using DatabaseImporter.Common.Database.Connection;
+using DatabaseImporter.Common.Database.Table;
 using DatabaseImporter.Common.Infastructure;
+using DatabaseImporter.Database.Connection;
+using DatabaseImporter.Database.Table;
 using DatabaseImporter.WPF.Infastructure.Database.Connection;
 using DatabaseImporter.WPF.Infastructure.Services;
 using DatabaseImporter.WPF.Infastructure.ViewModels;
@@ -34,7 +37,9 @@ namespace DatabaseImporter.WPF.Infastructure
         {
             ServiceLocator.AddSingleton<IDbConnectionConfigurator, AppSettingsDatabaseConfigurator>();
             ServiceLocator.AddSingleton<IMessagingService, MessagingService>();
-            ServiceLocator.AddSingleton<INavigationService>((svcLocator) => new NavigationService(GetNavigationMap(),svcLocator));
+            ServiceLocator.AddSingleton<INavigationService>((svcLocator) => new NavigationService(GetNavigationMap(), svcLocator));
+            ServiceLocator.AddSingleton<ITableServices>((svcLoc) => new MsSqlTableServices(svcLoc.GetService<IDbConnectionConfigurator>(),
+                DefaultDbConnectionFactory.Default));
         }
 
         private void InitializeViewModel()
