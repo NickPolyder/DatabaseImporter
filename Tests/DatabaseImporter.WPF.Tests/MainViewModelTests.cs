@@ -1,5 +1,5 @@
 ﻿using DatabaseImporter.WPF.Infastructure.Services;
-using DatabaseImporter.WPF.Infastructure.ViewModels;
+using DatabaseImporter.WPF.Infrastructure.ViewModels;
 using Moq;
 using Xunit;
 
