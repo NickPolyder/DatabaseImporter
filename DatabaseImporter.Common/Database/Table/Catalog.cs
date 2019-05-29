@@ -1,6 +1,9 @@
-﻿namespace DatabaseImporter.Common.Database.Table
+﻿using System.Diagnostics;
+
+namespace DatabaseImporter.Common.Database.Table
 {
-    public struct Catalog
+	[DebuggerDisplay("{Name}")]
+	public struct Catalog
     {
         public int Id { get; }
 

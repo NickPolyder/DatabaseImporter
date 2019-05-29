@@ -8,6 +8,7 @@ using DatabaseImporter.WPF.Infastructure.Database.Connection;
 using DatabaseImporter.WPF.Infastructure.Services;
 using DatabaseImporter.WPF.Infastructure.Utilities;
 using DatabaseImporter.WPF.Infastructure.ViewModels;
+using DatabaseImporter.WPF.Infrastructure.ViewModels;
 
 namespace DatabaseImporter.WPF
 {

@@ -73,17 +73,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Infastructure\DatabaseImporterContext.cs" />
-    <Compile Include="Infastructure\Database\Connection\AppSettingsDatabaseConfigurator.cs" />
-    <Compile Include="Infastructure\Services\INavigationService.cs" />
-    <Compile Include="Infastructure\Services\IMessagingService.cs" />
-    <Compile Include="Infastructure\Services\NavigationNotFoundException.cs" />
-    <Compile Include="Infastructure\Services\NavigationService.cs" />
-    <Compile Include="Infastructure\Services\MessagingService.cs" />
-    <Compile Include="Infastructure\Utilities\Command.cs" />
-    <Compile Include="Infastructure\ViewModels\BaseViewModel.cs" />
-    <Compile Include="Infastructure\ViewModels\ConnectionViewModel.cs" />
-    <Compile Include="Infastructure\ViewModels\MainViewModel.cs" />
+    <Compile Include="Infrastructure\DatabaseImporterContext.cs" />
+    <Compile Include="Infrastructure\Database\Connection\AppSettingsDatabaseConfigurator.cs" />
+    <Compile Include="Infrastructure\Services\INavigationService.cs" />
+    <Compile Include="Infrastructure\Services\IMessagingService.cs" />
+    <Compile Include="Infrastructure\Services\NavigationNotFoundException.cs" />
+    <Compile Include="Infrastructure\Services\NavigationService.cs" />
+    <Compile Include="Infrastructure\Services\MessagingService.cs" />
+    <Compile Include="Infrastructure\Utilities\Command.cs" />
+    <Compile Include="Infrastructure\ViewModels\BaseViewModel.cs" />
+    <Compile Include="Infrastructure\ViewModels\ConnectionViewModel.cs" />
+    <Compile Include="Infrastructure\ViewModels\MainViewModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
